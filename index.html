@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Valentine?</title>
+  <style>
+.emoji {
+  font-size: 4rem;
+  margin-bottom: 10px;
+  animation: bounce 1.5s infinite;
+}
+
+.hint {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #777;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+    body {
+      font-family: "Comic Sans MS", cursive, sans-serif;
+      background: linear-gradient(135deg, #ffdee9, #b5fffc);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      max-width: 90%;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 2rem;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    #yes {
+      background: #ff4d6d;
+      color: white;
+      margin-right: 20px;
+    }
+
+    #no {
+      background: #ccc;
+      color: #333;
+      position: absolute;
+    }
+
+    .celebrate {
+      display: none;
+    }
+
+    .celebrate img {
+      max-width: 250px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container" id="main">
+ <div class="emoji">😺💘</div>
+<h1>Will you be my Valentine?</h1>
+<p class="hint">“No” seems a bit shy 🙈</p>
+
+  <button id="yes">Yes 💖</button>
+  <button id="no">No 🙃</button>
+</div>
+
+<div class="container celebrate" id="celebrate">
+  <h1>YAYYYY!!! 🎉🥰</h1>
+  <p>You made the right choice 😌💘</p>
+  <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" alt="celebration"/>
+</div>
+
+<script>
+  const noBtn = document.getElementById("no");
+  const yesBtn = document.getElementById("yes");
+  const main = document.getElementById("main");
+  const celebrate = document.getElementById("celebrate");
+
+  function moveNoButton() {
+    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+
+    // Make YES button grow
+    const currentSize = parseFloat(getComputedStyle(yesBtn).fontSize);
+    yesBtn.style.fontSize = currentSize + 2 + "px";
+  }
+
+  // Desktop
+  noBtn.addEventListener("mouseover", moveNoButton);
+
+  // Mobile (touch)
+  noBtn.addEventListener("touchstart", moveNoButton);
+
+  yesBtn.addEventListener("click", () => {
+    main.style.display = "none";
+    celebrate.style.display = "block";
+  });
+</script>
+
+</body>
+</html>

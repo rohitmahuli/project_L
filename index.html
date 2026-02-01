@@ -3,96 +3,141 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Valentine?</title>
+  <title>Be My Valentine? 💕</title>
   <style>
-.emoji {
-  font-size: 4rem;
-  margin-bottom: 10px;
-  animation: bounce 1.5s infinite;
-}
-
-.hint {
-  margin-top: 10px;
-  font-size: 0.9rem;
-  color: #777;
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     body {
       font-family: "Comic Sans MS", cursive, sans-serif;
-      background: linear-gradient(135deg, #ffdee9, #b5fffc);
+      background: linear-gradient(135deg, #ffd4e5, #ffb3d9);
       height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
       overflow: hidden;
+      position: relative;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 1.5rem;
+      animation: float 12s infinite ease-in-out;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.5;
+      }
+      90% {
+        opacity: 0.5;
+      }
+      100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+      }
     }
 
     .container {
       background: white;
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-      max-width: 90%;
+      padding: 40px 50px;
+      border-radius: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      max-width: 500px;
+      width: 90%;
+    }
+
+    .emoji {
+      font-size: 5rem;
+      margin-bottom: 20px;
     }
 
     h1 {
-      margin-bottom: 20px;
-      font-size: 2rem;
+      margin-bottom: 15px;
+      font-size: 2.5rem;
+      color: #ff4d6d;
+    }
+
+    .hint {
+      margin: 15px 0 30px;
+      font-size: 1rem;
+      color: #ff69b4;
     }
 
     button {
-      padding: 12px 24px;
-      font-size: 1.2rem;
+      padding: 15px 35px;
+      font-size: 1.3rem;
       border: none;
-      border-radius: 12px;
+      border-radius: 20px;
       cursor: pointer;
-      transition: all 0.2s ease;
-      position: relative;
+      font-weight: bold;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      margin: 0 10px;
     }
 
     #yes {
-      background: #ff4d6d;
+      background: linear-gradient(135deg, #ff6b9d, #ff4d6d);
       color: white;
-      margin-right: 20px;
+    }
+
+    #yes:hover {
+      transform: scale(1.05);
     }
 
     #no {
       background: #ccc;
-      color: #333;
-      position: absolute;
+      color: #666;
+    }
+    
+    #no.moving {
+      position: fixed;
     }
 
     .celebrate {
       display: none;
     }
 
-    .celebrate img {
-      max-width: 250px;
-      margin-top: 20px;
+    .celebrate h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: #ff4d6d;
+    }
+
+    .celebrate p {
+      font-size: 1.5rem;
+      color: #ff69b4;
     }
   </style>
 </head>
 <body>
 
 <div class="container" id="main">
- <div class="emoji">😺💘</div>
-<h1>Will you be my Valentine?</h1>
-<p class="hint">“No” seems a bit shy 🙈</p>
-
-  <button id="yes">Yes 💖</button>
-  <button id="no">No 🙃</button>
+  <div class="emoji">🐰</div>
+  <h1>Will you be my Valentine?</h1>
+  <p class="hint">Hint: "No" is camera shy 🙈</p>
+  
+  <div>
+    <button id="yes">Yes! 💖</button>
+    <button id="no">No 🙃</button>
+  </div>
 </div>
 
 <div class="container celebrate" id="celebrate">
-  <h1>YAYYYY!!! 🎉🥰</h1>
-  <p>You made the right choice 😌💘</p>
-  <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" alt="celebration"/>
+  <div class="emoji">🐰</div>
+  <h1>YAYYYY!!! 🎉</h1>
+  <p>You made the perfect choice! 💝</p>
+  <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" alt="celebration" style="max-width: 300px; border-radius: 20px; margin: 20px 0;"/>
+  <p>Happy Valentine's Day! 💕</p>
 </div>
 
 <script>
@@ -101,22 +146,48 @@
   const main = document.getElementById("main");
   const celebrate = document.getElementById("celebrate");
 
+  // Create floating hearts
+  function createFloatingHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.textContent = ["💕", "💖", "💗"][Math.floor(Math.random() * 3)];
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (Math.random() * 4 + 10) + "s";
+    heart.style.animationDelay = Math.random() * 5 + "s";
+    document.body.appendChild(heart);
+    
+    setTimeout(() => heart.remove(), 16000);
+  }
+
+  // Create hearts periodically
+  setInterval(createFloatingHeart, 2000);
+  for (let i = 0; i < 4; i++) {
+    setTimeout(createFloatingHeart, i * 500);
+  }
+
+  let noBtnScale = 1;
+
   function moveNoButton() {
-    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+    noBtn.classList.add('moving');
+    const x = Math.random() * (window.innerWidth - 150);
+    const y = Math.random() * (window.innerHeight - 80);
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
 
     // Make YES button grow
     const currentSize = parseFloat(getComputedStyle(yesBtn).fontSize);
-    yesBtn.style.fontSize = currentSize + 2 + "px";
+    yesBtn.style.fontSize = Math.min(currentSize + 3, 60) + "px";
+    
+    // Make NO button shrink
+    noBtnScale = Math.max(noBtnScale - 0.1, 0.5);
+    noBtn.style.transform = `scale(${noBtnScale})`;
   }
 
-  // Desktop
   noBtn.addEventListener("mouseover", moveNoButton);
-
-  // Mobile (touch)
-  noBtn.addEventListener("touchstart", moveNoButton);
+  noBtn.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    moveNoButton();
+  });
 
   yesBtn.addEventListener("click", () => {
     main.style.display = "none";
